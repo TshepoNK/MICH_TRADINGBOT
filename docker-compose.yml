@@ -1,0 +1,22 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: tradingbot-timescaledb
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tradingbot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./migrations/001_market_ticks.sql:/docker-entrypoint-initdb.d/001_market_ticks.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tradingbot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  timescaledb_data:
