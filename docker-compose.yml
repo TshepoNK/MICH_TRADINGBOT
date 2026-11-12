@@ -4,9 +4,9 @@ services:
     container_name: tradingbot-timescaledb
     restart: unless-stopped
     environment:
-      POSTGRES_DB: tradingbot
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME:-tradingbot}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-local-dev-only-change-me}
     ports:
       - "5432:5432"
     volumes:

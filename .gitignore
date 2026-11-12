@@ -3,6 +3,7 @@
 venv/
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
 .coverage
 htmlcov/
@@ -11,6 +12,7 @@ htmlcov/
 .env
 .env.*
 !.env.example
+
 
 # Local database and editor state
 *.sqlite3

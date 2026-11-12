@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 
 from tradingbot.api.security import create_token, verify_token
+from tradingbot.config.settings import settings
 
 app = FastAPI(title="TradingBOT API", version="1.0.0")
 
@@ -24,7 +25,9 @@ def health() -> dict[str, str]:
 
 @app.post("/auth/login")
 def login(payload: LoginRequest) -> dict[str, str]:
-    if payload.username == "admin" and payload.password == "admin123":
+    if not settings.api_username or not settings.api_password or not settings.jwt_secret:
+        raise HTTPException(status_code=503, detail="API credentials and JWT secret are not configured")
+    if payload.username == settings.api_username and payload.password == settings.api_password:
         return {"token": create_token(payload.username)}
     raise HTTPException(status_code=401, detail="invalid credentials")
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from tradingbot.config.settings import settings
 from tradingbot.execution.base import BrokerAdapter
 
 
@@ -9,9 +10,9 @@ class MetaTrader5Adapter(BrokerAdapter):
     """Minimal MT5 adapter shell for local desktop integration."""
 
     def __init__(self, login: str | None = None, password: str | None = None, server: str | None = None):
-        self.login = login
-        self.password = password
-        self.server = server
+        self.login = login or settings.mt5_login
+        self.password = password or settings.mt5_password
+        self.server = server or settings.mt5_server
         self.connected = False
 
     def connect(self) -> bool:
