@@ -9,9 +9,7 @@ __pycache__/
 htmlcov/
 
 # Local configuration and secrets
-.env
-.env.*
-!.env.example
+
 
 
 # Local database and editor state
